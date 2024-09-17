@@ -1,0 +1,5 @@
+-- DROP DATABASE
+DROP DATABASE IF EXISTS socialsync_db;
+
+-- CREATE DATABASE
+CREATE DATABASE socialsync_db;
