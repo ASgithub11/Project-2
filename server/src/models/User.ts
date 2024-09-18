@@ -37,3 +37,56 @@ export class User
     }
 }
 
+// UserFactory function that creates the User model and sets up schema, table name, and hooks for hashing the password before saving
+export function UserFactory(sequelize: Sequelize): typeof User {
+    User.init(
+        {
+            // Define id as the primary key that auto-incrementing 
+            id: {
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                primaryKey: true,
+            },
+            // Define username with validation rules
+            username: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true, // Username cannot be an empty string
+                }
+            },
+            // Define email with validation rules
+            email: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                unique: true,   // Email must be unique to ensure no duplicate emails
+                validate: {
+                    isEmail: true,  // Validate that the email is in the correct format
+                }
+            },
+            // Define password field with validation rules
+            password: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true, // Password cannot be an empty string
+                }
+            },
+        },
+        {
+            tableName: 'users',   // Define the table name in the database
+            sequelize,          // Pass the sequelize instance
+            hooks: {
+                // Hook to hash the password before creating or updating the user
+                beforeCreate: async (user: User) => {
+                    await user.setPassword(user.password);
+                },
+                beforeUpdate: async (user: User) => {
+                    await user.setPassword(user.password);
+                },
+            },
+        }
+    );
+
+    return User;
+}
