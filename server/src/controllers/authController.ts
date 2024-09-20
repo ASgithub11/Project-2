@@ -28,3 +28,33 @@ export const register = async (req: Request, res: Response) => {
     }
 };
 
+// Handles user login and generates a JWT token
+export const login = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    
+    try {
+        // Find the user by email
+        const user = await User.findOne({ where: { email } });
+
+        // If the user is not found, return an error
+        if (!user) {
+            return res.status(401).json({ message: 'Authentication failed' });
+        }
+
+        // Compare the entered password with the hashed password
+        const passwordIsValid = await bcrypt.compare(password, user.password);
+
+        // If the password is invalid, return an error
+        if (!passwordIsValid) {
+            return res.status(401).json({ message: 'Authentication failed' });
+        }
+
+        // Generate a JWT token
+        const token = jwt.sign({ userId: user.id, email }, secretKey, { expiresIn: '1h' });
+
+        return res.json({ token });
+        } catch (error) {
+        console.error('Error during login', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
