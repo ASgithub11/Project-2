@@ -1,6 +1,9 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import { User } from '../../models/index.js';
+import Jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const router = express.Router();
 
@@ -35,9 +38,9 @@ router.post('/create', async (req: Request, res: Response) => {
     try {
         const newUser = new User({ id, username, email, password });
         await newUser.save();
-        res.status(201).json(newUser);
+        return res.status(201).json(newUser);
     } catch (error) {
-        res.status(500).json({ message: 'Error creating user', error});
+        return res.status(500).json({ message: 'Error creating user', error});
     }
 });
 
@@ -45,14 +48,16 @@ router.post('/create', async (req: Request, res: Response) => {
 router.post('/login', async (req: Request, res: Response) => {
     const { username, password } = req.body;
     try {
-        const user = await User.findOne({ username, password });
-        if (user) {
-            res.json({ message: 'Login successful', user});
-        } else {
-            res.status(401).json({ message: 'Invalid credentials'});
-        }
+        const user = await User.findOne({ where:{username}});
+        if (!user) {return res.status(401).json({ message: 'Invalid credentials'});}
+        const validPassword = await user.validatePassword(password);
+        if (!validPassword) {return res.status(401).json({ message: 'Invalid credentials'});}
+        const secret = process.env.JWT_SECRET_KEY || 'FALLBACK_SECRET';
+        const token = Jwt.sign({ id: user.id, username: user.username }, secret, { expiresIn: '1h' });
+        return res.json({ message: 'Login successful', token });
+        
     } catch (error) {
-        res.status(500).json({ message: 'Error logging in', error});
+        return res.status(500).json({ message: 'Error logging in', error});
     }
 });
 

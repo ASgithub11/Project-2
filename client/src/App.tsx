@@ -1,18 +1,13 @@
-import React from 'react';
-import RandomPhoto from './components/RandomPhoto';
-import WeatherInfo from './components/WeatherGenerator';
-
-const App: React.FC = () => {
+import { Outlet } from 'react-router-dom';
+// import Navbar from './components/Navbar';
+function App() {
   return (
-      <><div className="App">
-          <h1>Random Photo from Unsplash</h1>
-          <RandomPhoto />
-      </div>
-        <div className="App">
-            <h1>My Weather App</h1>
-            <WeatherInfo />
-        </div></>
+    <div>
+      {/* <Navbar /> */}
+      <main className='container pt-5'>
+        <Outlet />
+      </main>
+    </div>
   );
 }
-
 export default App;
