@@ -5,20 +5,24 @@ import { RSVP, User, Event } from '../../models/index.js';
 const router = express.Router();
 // RSVP to an event
 router.post('/', async (_req: Request, res: Response) => {
-    const { userId, eventId, status } = _req.body;
-    if (!userId || !eventId || !status) {
-        return res.status(400).json({ message: 'User ID, Event ID, and RSVP status are required'});
+    const { id, userId, eventId, status } = _req.body;
+    if (!id || !userId || !eventId || !status) {
+        return res.status(400).json({ message: 'ID, User ID, Event ID, and RSVP status are required'});
     }
     try {
+        const rvspExists = await RSVP.findByPk(id);
         const userExists = await User.findByPk(userId);
         const eventExists = await Event.findByPk(eventId);
+        if (!rvspExists) {
+            return res.status(404).json({ message: 'RSVP not found'})
+        }
         if (!userExists) {
             return res.status(404).json({ message: 'User not found'});
         }
         if (!eventExists) {
             return res.status(404).json({ message: 'Event not found'});
         }
-        const newRsvp = new RSVP ({ userId, eventId, status});
+        const newRsvp = new RSVP ({ id, userId, eventId, status});
         await newRsvp.save();
         return res.status(201).json(newRsvp);
     } catch (error) {
