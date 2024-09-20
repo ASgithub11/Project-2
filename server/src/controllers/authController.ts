@@ -58,3 +58,14 @@ export const login = async (req: Request, res: Response) => {
         return res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+// Handles JWT token validation and user profile retrieval
+export const profile = (req: Request, res: Response) => {
+    const user = req.user;
+
+    if (!user) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    return res.json({ user });
+};
