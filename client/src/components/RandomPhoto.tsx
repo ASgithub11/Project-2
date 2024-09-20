@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import .env from '\dotenv';
+// import .env from '\dotenv';
 // REACT_APP_UNSPLASH_API_KEY=your_unsplash_api_key_here
+require('dotenv').config();
+
 
 const RandomPhoto = () => {
     const [photo, setPhoto] = useState(null);
@@ -8,7 +10,7 @@ const RandomPhoto = () => {
     const [error, setError] = useState(null);
 
     // Unsplash API client ID
-    const UNSPLASH_API_KEY = 'YOUR_CLIENT_ID';
+    const UNSPLASH_API_KEY = 'UNSPLASH_API_KEY';
 
     // function to fetch a random photo from Unsplash API
     const fetchRandomPhoto = async () => {
