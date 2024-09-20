@@ -7,6 +7,6 @@ const router = Router();
 
 router.use('/users', userRouter);
 router.use('/events', eventRouter);
-router.use('./rsvps', rsvpRouter);
+router.use('/rsvps', rsvpRouter);
 
 export default router;
