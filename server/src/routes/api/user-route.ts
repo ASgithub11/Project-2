@@ -7,7 +7,7 @@ const router = express.Router();
 // Get all users
 router.get('/', async (_req: Request, res: Response) => {
     try {
-        const users = await User.find();
+        const users = await User.findAll();
         res.json(users);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching users', error});
@@ -18,7 +18,7 @@ router.get('/', async (_req: Request, res: Response) => {
 router.get('/:id', async (req: Request, res: Response) => {
     const userId = req.params.id;
     try {
-        const user = await User.findById(userId);
+        const user = await User.findByPk(userId);
         if (user) {
             res.json(user);
         } else {
@@ -31,9 +31,9 @@ router.get('/:id', async (req: Request, res: Response) => {
 
 // Create a new user
 router.post('/create', async (req: Request, res: Response) => {
-    const { username, password } = req.body;
+    const { id, username, email, password } = req.body;
     try {
-        const newUser = new User({ username, password });
+        const newUser = new User({ id, username, email, password });
         await newUser.save();
         res.status(201).json(newUser);
     } catch (error) {
