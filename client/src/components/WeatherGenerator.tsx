@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import dotenv from 'dotenv';
-dotenv.config();
 
 interface WeatherData {
     name: string;
@@ -22,14 +20,14 @@ const WeatherInfo: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     // Your OpenWeatherMap API key
-    const API_KEY = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
+    const OPEN_WEATHER_API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
     // Function to fetch weather data
     const fetchWeatherData = useCallback(async (city: string) => {
         try {
             setLoading(true);
             const response = await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OPEN_WEATHER_API_KEY}&units=metric`
             );
 
             if (!response.ok) {
@@ -47,7 +45,7 @@ const WeatherInfo: React.FC = () => {
         } finally {
             setLoading(false);
         }
-    }, [API_KEY]);
+    }, [OPEN_WEATHER_API_KEY]);
 
     // Fetch weather data for a default city on component mount
     useEffect(() => {

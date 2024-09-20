@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import dotenv from 'dotenv';
-dotenv.config();
 
 interface Photo {
     urls: {
@@ -19,7 +17,8 @@ const RandomPhoto: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     // Your Unsplash API client ID
-    const UNSPLASH_CLIENT_ID = process.env.REACT_APP_UNSPLASH_API_KEY;
+    const UNSPLASH_CLIENT_ID = import.meta.env.VITE_UNSPLASH_API_KEY;
+    // console
 
     // Function to fetch a random photo
     const fetchRandomPhoto = useCallback(async () => {
