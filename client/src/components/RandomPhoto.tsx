@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -22,7 +22,7 @@ const RandomPhoto: React.FC = () => {
     const UNSPLASH_CLIENT_ID = process.env.REACT_APP_UNSPLASH_API_KEY;
 
     // Function to fetch a random photo
-    const fetchRandomPhoto = async () => {
+    const fetchRandomPhoto = useCallback(async () => {
         try {
             setLoading(true);
             const response = await fetch(
@@ -44,12 +44,12 @@ const RandomPhoto: React.FC = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [UNSPLASH_CLIENT_ID]);
 
     // Fetch photo on component mount
     useEffect(() => {
         fetchRandomPhoto();
-    }, []);
+    }, [fetchRandomPhoto]);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;

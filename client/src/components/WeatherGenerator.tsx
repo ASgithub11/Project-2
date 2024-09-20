@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -25,7 +25,7 @@ const WeatherInfo: React.FC = () => {
     const API_KEY = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
 
     // Function to fetch weather data
-    const fetchWeatherData = async (city: string) => {
+    const fetchWeatherData = useCallback(async (city: string) => {
         try {
             setLoading(true);
             const response = await fetch(
@@ -47,12 +47,12 @@ const WeatherInfo: React.FC = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [API_KEY]);
 
     // Fetch weather data for a default city on component mount
     useEffect(() => {
         fetchWeatherData('New York'); // Default city
-    }, []);
+    }, [fetchWeatherData]);
 
     if (loading) return <div>Loading weather data...</div>;
     if (error) return <div>Error: {error}</div>;
