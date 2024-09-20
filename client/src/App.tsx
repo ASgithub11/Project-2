@@ -1,8 +1,8 @@
 import React from 'react';
-import RandomPhoto from './RandomPhoto';
-import WeatherInfo from './WeatherGenerator';
+import RandomPhoto from './components/RandomPhoto';
+import WeatherInfo from './components/WeatherGenerator';
 
-function App() {
+const App: React.FC = () => {
   return (
       <><div className="App">
           <h1>Random Photo from Unsplash</h1>
