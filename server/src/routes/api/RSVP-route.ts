@@ -1,6 +1,6 @@
 import express from 'express';
 import type { Request, Response } from 'express';
-import { RSVP, User, Event } from '../models/index.js';
+import { RSVP, User, Event } from '../../models/index.js';
 
 const router = express.Router();
 // RSVP to an event
@@ -10,8 +10,8 @@ router.post('/', async (_req: Request, res: Response) => {
         return res.status(400).json({ message: 'User ID, Event ID, and RSVP status are required'});
     }
     try {
-        const userExists = await User.findById(userId);
-        const eventExists = await Event.findById(eventId);
+        const userExists = await User.findByPk(userId);
+        const eventExists = await Event.findByPk(eventId);
         if (!userExists) {
             return res.status(404).json({ message: 'User not found'});
         }
@@ -31,7 +31,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
     const rsvpId = req.params.id;
 
     try {
-        const rsvp = await RSVP.findByIdAndDelete(rsvpId);
+        const rsvp = await RSVP.findByPk(rsvpId);
         if (rsvp) {
             return res.json({ message: 'RSVP canceled successfully'});
         } else {

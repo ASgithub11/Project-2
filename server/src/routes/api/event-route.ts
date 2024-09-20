@@ -7,7 +7,7 @@ const router = express.Router();
 // Get all events
 router.get('/', async (_req: Request, res: Response) => {
     try {
-        const events = await Event.find();
+        const events = await Event.findAll();
         res.json(events);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching events', error });
@@ -18,7 +18,7 @@ router.get('/', async (_req: Request, res: Response) => {
 router.get('/:id', async (req: Request, res: Response) => {
     const eventId = req.params.id;
     try {
-        const event = await Event.findById(eventId);
+        const event = await Event.findByPk(eventId);
         if (event) {
             res.json(event);
         } else {
@@ -31,12 +31,12 @@ router.get('/:id', async (req: Request, res: Response) => {
 
 // Add a new event
 router.post('/', async (req: Request, res: Response) => {
-    const { title, date, location } = req.body;
+    const { id, title, date, location } = req.body;
     if(!title || !date || !location) {
         return res.status(400).json({ message: 'Title, date, and location are required'});
     }
     try {
-        const newEvent = new Event({ title, date, location });
+        const newEvent = new Event({ id, title, date, location });
         await newEvent.save();
         return res.status(201).json(newEvent);
     } catch (error) {
@@ -49,7 +49,7 @@ router.put('/:id', async (req: Request, res: Response) => {
     const eventId = req.params.id;
     const updates = req.body;
     try {
-        const event = await Event.findByIdAndUpdate(eventId, updates, { new: true});
+        const event = await Event.findByPk(eventId, updates);
         if (event) {
             res.json(event);
         } else {
@@ -64,7 +64,7 @@ router.put('/:id', async (req: Request, res: Response) => {
 router.delete('/:id', async (req: Request, res: Response) => {
     const eventId = req.params.id;
     try {
-        const result = await Event.findByIdAndDelete(eventId);
+        const result = await Event.findByPk(eventId);
         if(result) {
             res.json({ message: 'Event delted successfully'});
         } else {
