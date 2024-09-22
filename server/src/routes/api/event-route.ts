@@ -31,13 +31,13 @@ router.get('/:id', async (req: Request, res: Response) => {
 
 // Add a new event
 router.post('/', async (req: Request, res: Response) => {
-    const { id, title, date, location } = req.body;
-    if(!title || !date || !location) {
-        return res.status(400).json({ message: 'Title, date, and location are required'});
+    const { title, date, location, description } = req.body;
+    if(!title || !date || !location || !description) {
+        return res.status(400).json({ message: 'Title, date, location, and description are required'});
     }
     try {
-        const newEvent = new Event({ id, title, date, location });
-        await newEvent.save();
+        const newEvent = await Event.create({ title, date, location, description });
+        // await newEvent.save();
         return res.status(201).json(newEvent);
     } catch (error) {
         return res.status(500).json({ message: 'Error creating event', error });
@@ -49,8 +49,9 @@ router.put('/:id', async (req: Request, res: Response) => {
     const eventId = req.params.id;
     const updates = req.body;
     try {
-        const event = await Event.findByPk(eventId, updates);
+        const event = await Event.findByPk(eventId);
         if (event) {
+            await event.update(updates);
             res.json(event);
         } else {
             res.status(404).json({ message: 'Event not found' });
@@ -64,8 +65,11 @@ router.put('/:id', async (req: Request, res: Response) => {
 router.delete('/:id', async (req: Request, res: Response) => {
     const eventId = req.params.id;
     try {
-        const result = await Event.findByPk(eventId);
-        if(result) {
+        // const result = await Event.findByPk(eventId);
+        const event = await Event.findByPk(eventId);
+        //if(result) {
+        if(event) {
+            await event.destroy();
             res.json({ message: 'Event delted successfully'});
         } else {
             res.status(404).json({ message: 'Event not found'});
@@ -76,4 +80,3 @@ router.delete('/:id', async (req: Request, res: Response) => {
 });
 
 export { router as eventRouter } ;
-
