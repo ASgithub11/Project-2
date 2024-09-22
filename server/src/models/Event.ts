@@ -2,10 +2,11 @@ import { DataTypes, type Sequelize, Model } from 'sequelize';
 
 // Event model attributes
 interface EventAttributes {
-    id: number;
+    id?: number;
     title: string;
     date: Date;
     location: string;
+    description: string;
 }
 
 // Define Event class extending Sequelize Model
@@ -14,6 +15,7 @@ export class Event extends Model<EventAttributes> implements EventAttributes {
     public title!: string;
     public date!: Date;
     public location!: string;
+    public description!: string;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -38,6 +40,10 @@ export function EventFactory(sequelize: Sequelize): typeof Event {
             },
             location: {
                 type: DataTypes.STRING,
+                allowNull: false,
+            },
+            description: {
+                type: DataTypes.TEXT,       // Add description field with TEXT type
                 allowNull: false,
             },
         },
