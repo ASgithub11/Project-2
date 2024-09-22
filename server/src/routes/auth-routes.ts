@@ -4,12 +4,12 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 export const login = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try{
   // checks user
   const user = await User.findOne({
-    where: { username },
+    where: { email },
   });
   if (!user) {
     return res.status(401).json({ message: 'Authentication failed' });
@@ -28,7 +28,7 @@ export const login = async (req: Request, res: Response) => {
   }
 
   // create token
-  const token = jwt.sign({ userId: user.id, username }, secretKey, { expiresIn: '1d' });
+  const token = jwt.sign({ userId: user.id, email }, secretKey, { expiresIn: '1d' });
   return res.json({ token });
 } catch (error) {
     console.error('Error during login', error);
@@ -36,9 +36,40 @@ export const login = async (req: Request, res: Response) => {
 }
 };
 
+export const signup = async (req: Request, res: Response) => {
+  const { username, email, password } = req.body;
+
+  try {
+    // checks if user already exists
+    const existingUser = await User.findOne({
+      where: { email },
+  });
+
+  if (existingUser) {
+    return res.status(409).json({ message: 'Email already in use.' });
+  }
+  
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const newUser = await User.create({
+    username,
+    email,
+    password: hashedPassword,
+  });
+
+  return res.status(201).json(newUser);
+  } catch (error) {
+    console.error('Error during signup', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 const router = Router();
 
 // post /login - login user
 router.post('/login', login);
+
+// post /signup - signup user
+router.post('/signup', signup);
 
 export default router;
