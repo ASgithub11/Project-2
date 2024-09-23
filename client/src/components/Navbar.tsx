@@ -3,11 +3,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import logo from '../assets/images/SocialSync-logo.png';
 
 const Navbar: React.FC = () => {
     return (
         <nav className="navbar">
-            <div className="logo">Logo</div>    {/* We can add Logo of our website here */}
+            <div className="logo">
+            <img className="logo" src={logo} alt="SocialSync Logo" />
+                </div>    {/* Inserted the logo */}
             <ul className='nav-bar-links'>
                 <li><Link to="/">Home</Link></li>   {/* Link to the Home page */}
                 <li><Link to="/events">Events</Link></li>   {/* Link to the Events page */}
