@@ -2,10 +2,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Event } from '../types/Event';
 import './EventDetailCard.css';
-import '../components/UnsplashRandPhoto';
-import logo from '../assets/images/SocialSync-logo.png';
-
-// const image = placeHolderImg;
+import UnsplashRandomPhoto from '../components/UnsplashRandomPhoto';
 
 interface EventDetailProps {
   events: Event[];
@@ -22,17 +19,16 @@ const EventDetail: React.FC<EventDetailProps> = ({ events }) => {
 
   return (
     <div className='event-detail-container'>
-        <div className="Event-Detail-Card">
-            <div>
-                {/* <img src={`https://source.unsplash.com/1600x900/?${event.title}`} alt={event.title} /> */}
-                <img  className='unSplashAPI-img' src={logo} alt={event.title} />
-                <h1>{event.title}</h1>
-                <p>{new Date(event.date).toLocaleDateString()}</p>
-                <p>{event.location}</p>
-                <p>{event.description}</p>
-                <button onClick={() => navigate(-1)}>Return</button>
-            </div>
+      <div className="Event-Detail-Card">
+        <div>
+          {event.title && <UnsplashRandomPhoto query={event.title} />}
+          <h1>{event.title}</h1>
+          <p>{new Date(event.date).toLocaleDateString()}</p>
+          <p>{event.location}</p>
+          <p>{event.description}</p>
+          <button onClick={() => navigate(-1)}>Return</button>
         </div>
+      </div>
     </div>
   );
 };
