@@ -45,15 +45,22 @@ router.post('/', async (req: Request, res: Response) => {
 });
 
 // Login endpoint
-router.post('/:id', async (req: Request, res: Response) => {
+router.post('/login', async (req: Request, res: Response) => {
     const { email, password } = req.body;
     try {
+        // find user by email
         const user = await User.findOne({ where:{email}});
         if (!user) {return res.status(401).json({ message: 'Invalid credentials'});}
+
+        // validate password
         const validPassword = await user.validatePassword(password);
         if (!validPassword) {return res.status(401).json({ message: 'Invalid credentials'});}
+
+        // generate JWT token
         const secret = process.env.JWT_SECRET_KEY || 'FALLBACK_SECRET';
         const token = Jwt.sign({ id: user.id, email: user.email }, secret, { expiresIn: '1h' });
+
+        // return success response with token
         return res.json({ message: 'Login successful', token });
         
     } catch (error) {
