@@ -46,14 +46,14 @@ router.post('/', async (req: Request, res: Response) => {
 
 // Login endpoint
 router.post('/:id', async (req: Request, res: Response) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-        const user = await User.findOne({ where:{username}});
+        const user = await User.findOne({ where:{email}});
         if (!user) {return res.status(401).json({ message: 'Invalid credentials'});}
         const validPassword = await user.validatePassword(password);
         if (!validPassword) {return res.status(401).json({ message: 'Invalid credentials'});}
         const secret = process.env.JWT_SECRET_KEY || 'FALLBACK_SECRET';
-        const token = Jwt.sign({ id: user.id, username: user.username }, secret, { expiresIn: '1h' });
+        const token = Jwt.sign({ id: user.id, email: user.email }, secret, { expiresIn: '1h' });
         return res.json({ message: 'Login successful', token });
         
     } catch (error) {

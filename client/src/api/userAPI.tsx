@@ -42,7 +42,7 @@ const retrieveUser = async (id: number): Promise<UserData> => {
 const createUser = async (body: UserData): Promise<UserData> => {
   try {
     const response = await fetch(
-      '/api/users/', {
+      '/api/users', {
         method: 'POST',
           headers: {
             'Content-Type': 'application/json',

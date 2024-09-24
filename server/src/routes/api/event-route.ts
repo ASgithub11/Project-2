@@ -70,7 +70,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
         //if(result) {
         if(event) {
             await event.destroy();
-            res.json({ message: 'Event delted successfully'});
+            res.json({ message: 'Event deleted successfully'});
         } else {
             res.status(404).json({ message: 'Event not found'});
         }
