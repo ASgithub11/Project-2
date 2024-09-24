@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './CreateEvent.css';
 
 const CreateEvent: React.FC = () => {
 
@@ -36,7 +37,7 @@ const CreateEvent: React.FC = () => {
     };
 
     return (
-        <div>
+        <div className='container'>
             <h1>Create a New Event</h1>
             <form onSubmit={handleSubmit}>
                 <label>
