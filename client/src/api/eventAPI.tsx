@@ -4,7 +4,7 @@ import { EventData } from "../interfaces/EventData";
 // retrieve all events
 const retrieveEvents = async () => {
     try {
-        const response = await fetch('/api/volunteers', {
+        const response = await fetch('/api/events', {
             headers: {
                 'Content-Type': 'application/json'
             }

@@ -33,7 +33,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 });
 
 // Create a new user
-router.post('/create', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
     const { id, username, email, password } = req.body;
     try {
         const newUser = new User({ id, username, email, password });
@@ -45,7 +45,7 @@ router.post('/create', async (req: Request, res: Response) => {
 });
 
 // Login endpoint
-router.post('/login', async (req: Request, res: Response) => {
+router.post('/:id', async (req: Request, res: Response) => {
     const { username, password } = req.body;
     try {
         const user = await User.findOne({ where:{username}});
