@@ -28,7 +28,7 @@ export const login = async (req: Request, res: Response) => {
   }
 
   // create token
-  const token = jwt.sign({ userId: user.id, email }, secretKey, { expiresIn: '1d' });
+  const token = jwt.sign({ userId: user.id, email }, secretKey, { expiresIn: '1h' });
   return res.json({ token });
 } catch (error) {
     console.error('Error during login', error);

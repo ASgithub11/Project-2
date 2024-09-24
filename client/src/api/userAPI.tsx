@@ -63,14 +63,15 @@ const createUser = async (body: UserData): Promise<UserData> => {
 };
 
 // login a user
-const loginUser = async (id: number): Promise<UserData> => {
+const loginUser = async (email: string, password: string): Promise<UserData> => {
     try {
       const response = await fetch(
-        `/api/users/${id}`, {
+        '/api/login', {
           method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
+            body: JSON.stringify({ email, password }),
         }
   
       )
