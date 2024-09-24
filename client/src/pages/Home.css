@@ -6,7 +6,7 @@
   }
   
   .hero {
-    background: linear-gradient(to right, #4e54c8, #8f94fb);
+    background: linear-gradient(to right, #7be3dc, #27aca1);
     color: white;
     padding: 100px 20px;
     text-align: center;
@@ -40,6 +40,7 @@
   .features {
     padding: 50px 20px;
     text-align: center;
+    border: solid #333 20px;
   }
   
   .features h2 {
@@ -58,5 +59,12 @@
     position: relative;
     bottom: 0;
     width: 100%;
+
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
   }
   
