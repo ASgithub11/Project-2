@@ -30,6 +30,14 @@ input {
     border-radius: 4px;
     width: 100%;
 }
+
+textarea {
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
   
 button {
     padding: 10px;
