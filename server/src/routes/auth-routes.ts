@@ -1,7 +1,6 @@
 import { Router, type Request, type Response } from 'express';
 import { User } from '../models/User.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -11,13 +10,15 @@ export const login = async (req: Request, res: Response) => {
   const user = await User.findOne({
     where: { email },
   });
+  console.log("whythough???");
   if (!user) {
-    return res.status(401).json({ message: 'Authentication failed' });
+    return res.status(401).json({ message: 'Authentication failed?????' });
   }
-
+  
   // checks password
-  const passwordIsValid = await bcrypt.compare(password, user.password);
+  const passwordIsValid = await user.validatePassword(password)
   if (!passwordIsValid) {
+    console.log("okiedokie");
     return res.status(401).json({ message: 'Authentication failed' });
   }
 
@@ -49,12 +50,10 @@ export const signup = async (req: Request, res: Response) => {
     return res.status(409).json({ message: 'Email already in use.' });
   }
   
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   const newUser = await User.create({
     username,
     email,
-    password: hashedPassword,
+    password,
   });
 
   return res.status(201).json(newUser);
