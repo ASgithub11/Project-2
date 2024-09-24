@@ -1,6 +1,7 @@
 // Login page that allows users to enter their email and password to log in to the application
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -31,7 +32,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <label>Email:</label>
