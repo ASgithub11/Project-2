@@ -10,8 +10,12 @@
 }
 
 .navbar .logo {
-    font-size: 1.5rem;
     font-weight: bold;
+}
+
+.navbar .logo img {
+    height: 4rem;
+    border-radius: 7%;
 }
 
 .nav-bar-links {
