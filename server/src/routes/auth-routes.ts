@@ -10,7 +10,7 @@ export const login = async (req: Request, res: Response) => {
   const user = await User.findOne({
     where: { email },
   });
-  console.log("whythough???");
+  // console.log("whythough???");
   if (!user) {
     return res.status(401).json({ message: 'Authentication failed?????' });
   }
@@ -18,7 +18,7 @@ export const login = async (req: Request, res: Response) => {
   // checks password
   const passwordIsValid = await user.validatePassword(password)
   if (!passwordIsValid) {
-    console.log("okiedokie");
+    // console.log("okiedokie");
     return res.status(401).json({ message: 'Authentication failed' });
   }
 

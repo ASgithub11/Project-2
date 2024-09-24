@@ -1,0 +1,8 @@
+.events-page {
+    padding: 16px;
+  }
+  
+  .events-list {
+    display: flex;
+    flex-wrap: wrap;
+  }

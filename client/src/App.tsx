@@ -1,6 +1,5 @@
-// import React from 'react';
-// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
+import EventsPage from './pages/EventsPage';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
 import Events from './pages/Events';
@@ -14,6 +13,7 @@ const App = () => {
     <div>
       <Navbar />
       <Routes>
+        <Route path="/events" element={<EventsPage />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/events" element={<Events />} />
