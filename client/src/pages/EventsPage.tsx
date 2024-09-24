@@ -9,13 +9,17 @@ import { retrieveEvents } from '../api/eventAPI';
 
 const EventsPage: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch events from an API or use static data
     const fetchEvents = async () => {
+      try {
         const fetchedEvents = await retrieveEvents();
         setEvents(fetchedEvents);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
     };
     fetchEvents();
     }, []);
@@ -26,11 +30,11 @@ const EventsPage: React.FC = () => {
 
   return (
     <div className="events-page">
-    <h1>Upcoming Events</h1>
-    <button onClick={handleCreateEvent}>Create Event</button>
-      <div className="events-list">
-        {events.map(event => (
-          <Card key={event.id} event={event} />
+      <h1>Upcoming Events</h1>
+      <button onClick={handleCreateEvent}>Create Event</button>
+        <div className="events-list">
+          {events.map(event => (
+            <Card key={event.id} event={event} />
         ))}
       </div>
     </div>
