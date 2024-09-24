@@ -1,6 +1,7 @@
 // Signup page which allows users to create an account by providing their email and password
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Signup.css';
 
 const Signup: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -36,7 +37,7 @@ const Signup: React.FC = () => {
     };
 
     return (
-        <div>
+        <div className='container'>
         <h1>Signup</h1>
         <form onSubmit={handleSignup}>
             <label>Username:</label>
