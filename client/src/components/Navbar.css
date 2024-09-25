@@ -16,6 +16,7 @@
 .navbar .logo img {
     height: 4rem;
     border-radius: 7%;
+    width: 100%;
 }
 
 .nav-bar-links {
