@@ -57,7 +57,7 @@ const CreateEvent: React.FC = () => {
                     required />
                 </label>
                 <label>
-                    Location:
+                    City:
                     <input
                     type="text"
                     value={location}
