@@ -1,0 +1,11 @@
+.weather-info {
+    margin-top: 1em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .weather-info h3 {
+    margin-top: 0;
+  }

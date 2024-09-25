@@ -1,74 +1,57 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 
-interface WeatherData {
-    name: string;
-    sys: {
-        country: string;
-    };
-    main: {
-        temp: number;
-        humidity: number;
-    };
-    weather: {
-        description: string;
-    }[];
+interface WeatherGeneratorProps {
+  location: string;
 }
 
-const WeatherInfo: React.FC = () => {
-    const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+const WeatherGenerator: React.FC<WeatherGeneratorProps> = ({ location }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [weather, setWeather] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  // Your Open Weather API key
+  const OPEN_WEATHER_API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
-    // Your OpenWeatherMap API key
-    const OPEN_WEATHER_API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
-
-    // Function to fetch weather data
-    const fetchWeatherData = useCallback(async (city: string) => {
-        try {
-            setLoading(true);
-            const response = await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OPEN_WEATHER_API_KEY}&units=metric`
-            );
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const data: WeatherData = await response.json();
-            setWeatherData(data);
-        } catch (err) {
-            if (err instanceof Error) {
-                setError('Failed to fetch weather data: ' + err.message);
-            } else {
-                setError('Failed to fetch weather data');
-            }
-        } finally {
-            setLoading(false);
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${OPEN_WEATHER_API_KEY}&units=imperial`
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch weather data');
         }
-    }, [OPEN_WEATHER_API_KEY]);
+        const data = await response.json();
+        setWeather(data);
+        setLoading(false);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('An unknown error occurred');
+        }
+        setLoading(false);
+      }
+    };
 
-    // Fetch weather data for a default city on component mount
-    useEffect(() => {
-        fetchWeatherData('New York'); // Default city
-    }, [fetchWeatherData]);
+    fetchWeather();
+  }, [location, OPEN_WEATHER_API_KEY]);
 
-    if (loading) return <div>Loading weather data...</div>;
-    if (error) return <div>Error: {error}</div>;
+  if (loading) {
+    return <div>Loading weather...</div>;
+  }
 
-    return (
-        <div>
-            <h1>Weather Information</h1>
-            {weatherData && (
-                <div>
-                    <h2>{weatherData.name}, {weatherData.sys.country}</h2>
-                    <p>Temperature: {weatherData.main.temp}°C</p>
-                    <p>Weather: {weatherData.weather[0].description}</p>
-                    <p>Humidity: {weatherData.main.humidity}%</p>
-                    <button onClick={() => fetchWeatherData('London')}>Check London Weather</button>
-                </div>
-            )}
-        </div>
-    );
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return (
+    <div className="weather-info">
+      <h3>Weather in {location}</h3>
+      <p>Temperature: {weather.main.temp}°F</p>
+      <p>Condition: {weather.weather[0].description}</p>
+    </div>
+  );
 };
 
-export default WeatherInfo;
+export default WeatherGenerator;

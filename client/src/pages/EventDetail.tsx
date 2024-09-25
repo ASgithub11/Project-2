@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Event } from '../types/Event';
 import './EventDetailCard.css';
 import UnsplashRandomPhoto from '../components/UnsplashRandomPhoto';
+import WeatherGenerator from '../components/WeatherGenerator';
 
 interface EventDetailProps {
   events: Event[];
@@ -26,6 +27,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ events }) => {
           <p>{new Date(event.date).toLocaleDateString()}</p>
           <p>{event.location}</p>
           <p>{event.description}</p>
+          <WeatherGenerator location={event.location} /> 
           <button onClick={() => navigate(-1)}>Return</button>
         </div>
       </div>
