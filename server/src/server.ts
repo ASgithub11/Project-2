@@ -1,4 +1,4 @@
-const forceDatabaseRefresh = false;
+// const forceDatabaseRefresh = false;
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -13,7 +13,7 @@ import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-const port = process.env.PORT || 3000;
+// const port = process.env.PORT || 3000;
 
 app.use(cors());
 
@@ -35,6 +35,6 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', err);
   });
 
-  app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  app.listen(PORT, () => {
+    console.log(`Server is running on PORT ${PORT}`);
   });
