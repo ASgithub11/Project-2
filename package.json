@@ -25,6 +25,9 @@
         "wait-on": "^7.2.0"
     },
     "dependencies": {
-        "react-router-dom": "^6.26.2"
+        "@types/sequelize": "^4.28.20",
+        "react-router-dom": "^6.26.2",
+        "sequelize": "^6.37.3",
+        "typescript": "^5.6.2"
     }
 }
