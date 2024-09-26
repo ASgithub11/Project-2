@@ -22,13 +22,17 @@ const EventDetail: React.FC<EventDetailProps> = ({ events }) => {
     <div className='event-detail-container'>
       <div className="Event-Detail-Card">
         <div>
-          {event.title && <UnsplashRandomPhoto query={event.title} />}
-          <h1>{event.title}</h1>
-          <p>{new Date(event.date).toLocaleDateString()}</p>
-          <p>{event.location}</p>
-          <p>{event.description}</p>
-          <WeatherGenerator location={event.location} /> 
-          <button onClick={() => navigate(-1)}>Return</button>
+          {event.title && <UnsplashRandomPhoto className="unSplashAPI-img" query={event.title} />}
+          <div className='event-content'>
+            <h1>{event.title}</h1>
+            <p>{new Date(event.date).toLocaleDateString()}</p>
+            <p>{event.location}</p>
+            <p>{event.description}</p>
+            <WeatherGenerator location={event.location} /> 
+          </div>
+          <div className='button-container'>
+            <button className='button' onClick={() => navigate(-1)}>Return</button>
+          </div>
         </div>
       </div>
     </div>

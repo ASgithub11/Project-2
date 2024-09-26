@@ -3,6 +3,7 @@ import './UnsplashRandomPhoto.css';
 
 interface UnsplashRandomPhotoProps {
   query: string;
+  className?: string;
 }
 
 const UnsplashRandomPhoto: React.FC<UnsplashRandomPhotoProps> = ({ query }) => {
