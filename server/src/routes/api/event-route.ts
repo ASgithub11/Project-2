@@ -10,6 +10,7 @@ router.get('/', async (_req: Request, res: Response) => {
         const events = await Event.findAll();
         res.json(events);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: 'Error fetching events', error });
     }
 });
