@@ -91,6 +91,10 @@ SocialSync is an application that enables users to create and organize social ev
 
 SocialSync should now be running locally at http://localhost:3000.
 
+Link to the deployed application on render:
+
+https://socialsync-qsn7.onrender.com
+
 ## Usage
 
 1. Signup/Login:
@@ -141,7 +145,7 @@ SOFTWARE.
 
 - Kayla Hebertson Github: https://github.com/kaylahebertson
 
-- Keith Amadeus Github: https://github.com/keithamadeus
+- Keith Williams Github: https://github.com/keithamadeus
 
 ## Questions
 
