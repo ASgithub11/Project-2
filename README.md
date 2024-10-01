@@ -113,6 +113,10 @@ The following animation shows the web application's appearance and functionality
 
 ![Alt text](client/src/assets/images/Demo.gif)
 
+Link to the deployed application on render:
+
+https://socialsync-qsn7.onrender.com
+
 ## License
 
 MIT License
