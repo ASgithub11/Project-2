@@ -9,13 +9,13 @@ import sequelize from './config/connection.js';
 import routes from './routes/index.js';
 import authRoutes from './routes/auth-routes.js';
 import { eventRouter } from './routes/api/event-route.js'; 
-import cors from 'cors';
+// import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 // const port = process.env.PORT || 3000;
 
-app.use(cors());
+// app.use(cors());
 
 // Serves static files in the entire client's dist folder
 app.use(express.static('../client/dist'));
